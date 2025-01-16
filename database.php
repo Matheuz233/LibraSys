@@ -6,9 +6,16 @@ class DB
 
   public function __construct($config)
   {
-    $connectionString = $config['driver'] . ":" . $config['database'];
 
-    $this->db = new PDO($connectionString);
+    $driver = $config['driver'];
+
+    $dsn = $driver . ':' . http_build_query($config, '', ';');
+
+    if ($driver == 'sqlite') {
+      $dsn = $driver . ":" . $config['database'];
+    }
+
+    $this->db = new PDO($dsn);
   }
 
   public function query($query, $class = null, $params = [])
