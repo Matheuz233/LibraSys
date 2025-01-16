@@ -1,7 +1,5 @@
 <?php
 
-$id = $_REQUEST['id'];
+$livro = $database->query("select * from livros where id = :id", Livro::class, ['id' => $_GET['id']])->fetch();
 
-$livro = (new DB())->livro($id);
-
-view('livro' , compact('livro'));
+view('livro', compact('livro'));

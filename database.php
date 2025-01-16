@@ -4,30 +4,25 @@ class DB
 {
   private  $db;
 
-  public function __construct()
+  public function __construct($config)
   {
-    $this->db = new PDO('sqlite:database.sqlite');
+    $connectionString = $config['driver'] . ":" . $config['database'];
+
+    $this->db = new PDO($connectionString);
   }
 
-  public function livros()
+  public function query($query, $class = null, $params = [])
   {
-    $query = $this->db->query("select * from livros");
+    $prepare = $this->db->prepare($query);
 
-    $items = $query->fetchAll();
+    if ($class) {
+      $prepare->setFetchMode(PDO::FETCH_CLASS, $class);
+    }
 
-    return array_map(fn($item) => Livro :: make ($item), $items);
-  }
+    $prepare->execute($params);
 
-  public function livro($id)
-  {
-    $sql = "select * from livros";
-
-    $sql .= " where id = " . $id;
-
-    $query = $this->db->query($sql);
-
-    $items = $query->fetchAll();
-
-    return array_map(fn($item) => Livro :: make ($item), $items)[0];
+    return $prepare;
   }
 }
+
+$database = new DB($config['database']);
