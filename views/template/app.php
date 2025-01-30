@@ -28,6 +28,13 @@
   </header>
 
   <main class="mx-auto max-w-screen-lg space-y-6">
+    <?php if ($mensagem = flash()->get('mensagem')): ?>
+
+      <div class="border-green-800 border-2 rounded bg-green-900 px-4 py-1 my-4 text-white font-bold">
+        <?= $mensagem ?>
+      </div>
+
+    <?php endif; ?>
     <?php require "views/{$view}.view.php" ?>
   </main>
 </body>

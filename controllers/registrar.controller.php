@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     'senha' => ['required', 'min:8', 'max:30']
   ], $_POST);
 
-  if ($validacao->naoPassou()) {
+  if ($validacao->naoPassou('registrar')) {
     header('location: /login');
     exit();
   }
@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ]
   );
 
-  header('location: /login?mensagem=Registrado com sucesso!');
+  flash()->push('mensagem', 'Usuário cadastrado com sucesso!');
+  header('location: /login');
 
   exit();
 }

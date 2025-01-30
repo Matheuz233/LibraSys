@@ -1,6 +1,6 @@
 <?php
 
-$mensagem = $_REQUEST['mensagem'] ?? '';
+require 'Validacao.php';
 
 // 1. Receber os dados do formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     'senha' => ['required']
   ], $_POST);
 
-  if ($validacao->naoPassou()) {
+  if ($validacao->naoPassou('login')) {
     header('location: /login');
     exit();
   }
@@ -30,9 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($usuario) {
     $_SESSION['auth'] = $usuario;
+    flash()->push('mensagem', "Seja Bem-Vindo" . $usuario->nome . "!");
     $_SESSION['mensagem'] = "Seja Bem-Vindo" . $usuario->nome . "!";
     header('location: /');
     exit();
   }
 }
-view('login', compact('mensagem'));
+view('login');

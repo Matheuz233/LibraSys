@@ -53,9 +53,16 @@ class Validacao
     }
   }
 
-  public function naoPassou()
+  public function naoPassou($formulario = null)
   {
-    $_SESSION['validacoes'] = $this->validacoes;
+    $chave = 'validacoes';
+
+    if ($formulario) {
+      $chave .= '_' . $formulario;
+    }
+    
+    flash()->push($chave, $this->validacoes);
+
     return !empty($this->validacoes);
   }
 }
