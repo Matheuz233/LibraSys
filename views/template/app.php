@@ -17,7 +17,12 @@
         <li><a href="/meus-livros" class="hover:underline">Meus Livros</a></li>
       </ul>
       <ul>
-        <li><a href="/login" class="hover:underline">Fazer Login</a></li>
+        <?php if (isset($_SESSION['auth'])): ?>
+          <li><a href="/logout" class="hover:underline">Sair</a></li>
+        <?php else: ?>
+          <li><a href="/login" class="hover:underline">Fazer Login</a></li>
+          <li><a href="/registrar" class="hover:underline">Registrar</a></li>
+        <?php endif; ?>
       </ul>
     </nav>
   </header>

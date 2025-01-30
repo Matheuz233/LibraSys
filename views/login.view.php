@@ -2,9 +2,7 @@
 
   <div class="border border-stone-700 rounded">
     <h1 class="border-b border-stone-700 text-stone-400 font-bold px-4 py-2">Login</h1>
-    <form class=" px-4 py-2">
-
-
+    <form class=" px-4 py-2" method="post">
       <div class="flex flex-col">
         <label class="text-stone-400 mb-1">E-mail</label>
         <input type="email"
@@ -23,8 +21,6 @@
       <button type="submit" class="border-stone-800 border-2 rounded bg-stone-900 px-4 py-1 my-4 hover:bg-stone-800">Entrar</button>
 
     </form>
-
-
   </div>
 
   <div class="border border-stone-700 rounded">

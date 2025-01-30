@@ -15,7 +15,7 @@ class Validacao
           $temp = explode(":", $regra);
           $regra = $temp[0];
           $regraAr = $temp[1];
-          $validacao->$regra($regraAr[1], $campo, $valorCampo);
+          $validacao->$regra((int) $regraAr, $campo, $valorCampo);
         } else {
           $validacao->$regra($campo, $valorCampo);
         }
@@ -41,7 +41,7 @@ class Validacao
 
   private function min($min, $campo, $valor)
   {
-    if (strlen($valor) <= $min) {
+    if (strlen($valor) < $min) {
       $this->validacoes[] = "O campo $campo deve ter no mínimo $min caracteres";
     }
   }
@@ -53,11 +53,9 @@ class Validacao
     }
   }
 
-
-
   public function naoPassou()
   {
     $_SESSION['validacoes'] = $this->validacoes;
-    return sizeof($this->validacoes) > 0;
+    return !empty($this->validacoes);
   }
 }
