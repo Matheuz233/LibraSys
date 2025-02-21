@@ -15,7 +15,7 @@ class Validacao
           $temp = explode(":", $regra);
           $regra = $temp[0];
           $regraAr = $temp[1];
-          $validacao->$regra((int) $regraAr, $campo, $valorCampo);
+          $validacao->$regra($regraAr, $campo, $valorCampo);
         } else {
           $validacao->$regra($campo, $valorCampo);
         }
@@ -23,6 +23,24 @@ class Validacao
     }
 
     return $validacao;
+  }
+
+  private function unique($tabela, $campo, $valor)
+  {
+    if (strlen($valor) == 0) {
+      return;
+    }
+
+    $db = new Database(config('database'));
+
+    $resultado = $db->query(
+      query: "select * from $tabela where $campo = :valor",
+      params: ['valor' => $valor]
+    )->fetch();
+
+    if ($resultado) {
+      $this->validacoes[] = "O $campo já está em uso";
+    }
   }
 
   private function required($campo, $valor)
@@ -58,9 +76,9 @@ class Validacao
     $chave = 'validacoes';
 
     if ($formulario) {
-      $chave .= '_' . $formulario;
+      $chave .= "_{$formulario}";
     }
-    
+
     flash()->push($chave, $this->validacoes);
 
     return !empty($this->validacoes);

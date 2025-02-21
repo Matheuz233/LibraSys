@@ -1,6 +1,5 @@
 <?php
 
-
 function view($view, $data = [])
 {
   foreach ($data as $key => $value) {
@@ -11,6 +10,12 @@ function view($view, $data = [])
   require "views/template/app.php";
 }
 
+function dd(...$data) {
+  echo "<pre>";
+  var_dump($data);
+  echo "</pre>";
+  die();
+}
 
 function abort($code)
 {
@@ -21,4 +26,14 @@ function abort($code)
 
 function flash(){
   return new Flash;
+}
+
+function config($chave = null){
+  $config = require 'config.php';
+
+  if(strlen($chave) > 0){
+    return $config[$chave];
+  }
+
+  return $config;
 }

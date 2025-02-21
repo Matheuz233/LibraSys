@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $validacao = Validacao::validar([
     'email' => ['required', 'email'],
-    'senha' => ['required']
+    'password' => ['required']
   ], $_POST);
 
   if ($validacao->naoPassou('login')) {
@@ -22,11 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     query: "
       select * from usuarios
       where email = :email
-      and senha = :senha
     ",
     class: Usuario::class,
-    params: compact('email', 'senha')
+    params: compact('email')
   )->fetch();
+
+  if ($usuario) {
+    if (!password_verify($_POST['password'], $usuario->senha)) {
+      flash()->push('validacoes_login', ['E-mail ou senha inválidos']);
+      header('location: /login');
+      exit();
+    }
+  }
 
   if ($usuario) {
     $_SESSION['auth'] = $usuario;
