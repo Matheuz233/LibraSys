@@ -9,20 +9,23 @@ class Livro
   public $usuario_id;
   public $nota_avaliacao;
   public $count_avaliacoes;
+  public $imagem;
 
   public function query($where, $params)
   {
     $database = new Database(config('database'));
 
-    return $database->query("
-      SELECT l.id, l.titulo, l.autor, l.descricao,
+    return $database->query(
+      "
+      SELECT l.id, l.titulo, l.autor, l.descricao, l.imagem,
         ifnull(ROUND(SUM(a.nota) / 5.0, 2), 0) AS nota_avaliacao, 
         ifnull(COUNT(a.id), 0) AS count_avaliacoes
       FROM livros l
       LEFT JOIN avaliacoes a ON a.livro_id = l.id
       WHERE $where
       GROUP BY l.id, l.titulo, l.autor, l.descricao;",
-      self::class, $params
+      self::class,
+      $params
     );
   }
 

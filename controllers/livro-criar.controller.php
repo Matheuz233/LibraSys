@@ -15,6 +15,7 @@ $usuario_id = auth()->id;
 $titulo = $_POST['titulo'];
 $autor = $_POST['autor'];
 $descricao = $_POST['descricao'];
+$imagem = $_POST['imagem'];
 
 $validacao = Validacao::validar([
   'titulo' => ['required', 'min:3'],
@@ -28,8 +29,8 @@ if ($validacao->naoPassou()) {
 }
 
 $database->query(
-  'insert into livros (titulo, autor, descricao, usuario_id) values (:titulo, :autor, :descricao, :usuario_id)',
-  params: compact('titulo', 'autor', 'descricao', 'usuario_id')
+  'insert into livros (titulo, autor, descricao, usuario_id, imagem) values (:titulo, :autor, :descricao, :usuario_id, :imagem)',
+  params: compact('titulo', 'autor', 'descricao', 'usuario_id', 'imagem')
 );
 
 flash()->push('mensagem', 'Livro criado com sucesso!');

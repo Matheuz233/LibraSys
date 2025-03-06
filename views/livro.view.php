@@ -23,7 +23,7 @@
   <?php if (auth()): ?>
     <div class="border border-stone-700 rounded">
       <h1 class="border-b border-stone-700 text-stone-400 font-bold px-4 py-2">Avaliar</h1>
-      <form class=" px-4 py-2" method="post" action="/avaliacao-criar">
+      <form class=" px-4 py-2" method="post" action="/avaliacao-criar" enctype="multipart/form-data">
 
         <?php if ($validacoes = flash()->get('validacoes')): ?>
           <div class="border-red-800 border-2 rounded bg-red-900 px-4 py-1 my-4 text-white font-bold">

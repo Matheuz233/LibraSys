@@ -2,9 +2,9 @@
 
 <div class="grid grid-cols-2 space-x-5">
   <div class="flex flex-col gap-4">
-      <?php foreach ($livros as $livro): ?>
-        <?php require 'partials/_livro.php'; ?>
-      <?php endforeach; ?>
+    <?php foreach ($livros as $livro): ?>
+      <?php require 'partials/_livro.php'; ?>
+    <?php endforeach; ?>
   </div>
 
   <div>
@@ -47,6 +47,15 @@
           <textarea
             name="descricao"
             class="border-stone-800 border-2 rounded-sm bg-stone-900 text-sm focus:outline px-2 py-1"></textarea>
+        </div>
+
+
+        <div class="flex flex-col">
+          <label class="text-stone-400 mb-1">Imagem</label>
+          <input type="url"
+            name="imagem"
+            placeholder="Digite a URL da Imagem"
+            class="border-stone-800 border-2 rounded-sm bg-stone-900 text-sm focus:outline px-2 py-1" />
         </div>
 
         <button type="submit" class="border-stone-800 border-2 rounded bg-stone-900 px-4 py-1 my-4 hover:bg-stone-800">Salvar</button>
